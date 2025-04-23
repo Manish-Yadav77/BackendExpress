@@ -179,7 +179,7 @@ app.get("/all-course", async (req, res) => {
   }
 });
 
-app.get('/all-users', async (req, res)=>{
+app.get('/all-userdata', async (req, res)=>{
   try {
     const users = await User.find();
     res.json(users);
