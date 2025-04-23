@@ -1,0 +1,42 @@
+app.post('/register/user', async (req,res)=>{
+    try{
+        const {name,email,password,contact,role}=req.body;
+        const checkUser = await User.findOne({email});
+        if(checkUser){
+            res.status(400).json({message:'user Already registered'});
+        }
+        const newUser = new User({name,email,password,contact,role});
+        await newUser.save();
+
+    }catch (err){
+        res.status(500).json({message:'user registeration failed'})
+    }
+})
+
+UserScheema.js -->
+
+// userModer code here...
+
+app.post('/login', async (req,res)=>{
+    try{
+        const {email,password}=req.body;
+        const user = await User.findOne({email});
+        if(!user){
+            return res.status(400).json({message:'user not found'})
+        }
+        if(user.password!==password){
+            return res.status(400).json({message:"password didn't match"})
+        }
+        const token = jwt.sign({email},env.process.SECRET_KEY,{expiresIn:'1hr'});
+        const Reftoken = jwt.sign({email},env.process.SECRET_KEY,{expiresIn:'7d'});
+
+        return res.status(200).json({message:"user login successfully",token,Reftoken})
+
+    }catch(err){
+        return res.status(500).json({message:'user Login failed'})
+    }
+})
+
+
+---> hamne yha sirf admin ko access diya hai ki vo check kr paye ki kitne users hai...
+uske liye RBAC ka use karege....

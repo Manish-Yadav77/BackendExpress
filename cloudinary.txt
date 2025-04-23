@@ -1,0 +1,17 @@
+cloudinary
+
+main image ---->> convert in url / provide it to server ----->> server  ----------->>>  Database -> store in url...
+
+
+
+If you want to store your image at cloudinary then you have some specific credentials that you need --->>
+
+1. cloud_name -->> diykikuiz
+2. api_key --- >> 953179551694695
+3. api_secret --->>> YWDjePTf8-WWfBlajM2u-8lIIvg
+
+Installation --->> 
+1. Multer
+2. cloudinary
+3. Multer-storage-cloudinary
+
