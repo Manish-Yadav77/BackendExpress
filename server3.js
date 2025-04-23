@@ -62,8 +62,7 @@ app.post("/register", async (req, res) => {
   }
 });
 
-app.get(
-  "/allusers",
+app.get("/allusers",
   authMiddleware,
   authorizeRole("Trainer"),
   async (req, res) => {
@@ -180,7 +179,7 @@ app.get("/all-course", async (req, res) => {
   }
 });
 
-app.get('/allusers', async (req, res)=>{
+app.get('/all-users', async (req, res)=>{
   try {
     const users = await User.find();
     res.json(users);
