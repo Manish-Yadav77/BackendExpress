@@ -123,9 +123,7 @@ app.post("/verify", async (req, res) => {
   }
 });
 
-app.post(
-  "/add-course",
-  authMiddleware,
+app.post("/add-course",  authMiddleware,
   authorizeRole("Counsellor"),
   upload.single("banner"),
   async (req, res) => {
@@ -164,24 +162,33 @@ app.post(
 
 app.get("/all-course", async (req, res) => {
   try {
-    // const {search,duration,category}=req.query;
-    // let filters = {}
-    // if(search){
-    //   filters.title = {$regex:search, $options:"i"}
-    // }
-    // if(duration){
-    //   filters.duration = {$regex:duration, $options:"i"};
-    // }   
-    // if(category){
-    //   filters.category = {$regex:category, $options:"i"};
-    // }
-    const course = await Course.find();
-    // const course = await Course.find(filters);
+    const {search,duration,category}=req.query;
+    let filters = {}
+    if(search){
+      filters.title = {$regex:search, $options:"i"}
+    }
+    if(duration){
+      filters.duration = {$regex:duration, $options:"i"};
+    }   
+    if(category){
+      filters.category = {$regex:category, $options:"i"};
+    }
+    const course = await Course.find(filters);
     res.json(course);
   } catch (error) {
     res.status(502).json({ message: "error in getting course", error });
   }
 });
+
+app.get('/allusers', async (req, res)=>{
+  try {
+    const users = await User.find();
+    res.json(users);
+  } catch (error) {
+    console.log("error in alluserss",error);
+    return res.status(502).json({message:'error in all usersss',error});
+  }
+})
 
 app.listen(process.env.PORT, () => {
   console.log(
